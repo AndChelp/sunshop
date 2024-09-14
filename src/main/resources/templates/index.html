@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>SunShop</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <form th:action="@{/}" method="get" class="category-filter">
+        <select id="category" name="category" th:value="${selectedCategory}">
+            <option value="">Все категории</option>
+            <option th:each="category : ${categories}"
+                    th:value="${category.id}"
+                    th:text="${category.name}"
+                    th:selected="${category.id == selectedCategory}"></option>
+        </select>
+        <button type="submit">▶ </button>
+    </form>
+    <h1>SunShop</h1>
+    <a href="/cart" class="back-button">Корзина</a>
+</header>
+<div>
+    <ul>
+        <li th:each="product : ${products}">
+            <img th:src="${product.imageUrl}" alt="product image">
+            <p th:text="${product.name}"></p>
+            <p th:text="${product.description}"></p>
+            <p th:text="${product.price} + ' USD'"></p>
+            <a th:href="@{'/product/' + ${product.id}}">Подробнее</a>
+            <br>
+            <br>
+            <form th:action="@{'/cart/add/' + ${product.id}}" method="post">
+                <button type="submit">Купить</button>
+            </form>
+            <p th:text="${product.category.name}"></p>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

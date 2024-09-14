@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Корзина</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <a href="/" class="back-button">Главная</a>
+    <h1>Корзина</h1>
+</header>
+<div>
+    <ul>
+        <li th:each="item : ${cart.items}">
+            <p th:text="${item.product.name}"></p>
+            <img th:src="${item.product.imageUrl}" alt="product image">
+            <p>Цена за единицу: <span th:text="${item.product.price}"></span> USD</p>
+            <p>Количество: <span th:text="${item.quantity}"></span></p>
+        </li>
+    </ul>
+    <p>Общая сумма: <span th:text="${cart.total}"></span> USD</p>
+    <form th:action="@{/cart/checkout}" method="post">
+        <button type="submit">Оформить заказ</button>
+    </form>
+</div>
+</body>
+</html>
